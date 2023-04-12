@@ -1,25 +1,31 @@
 <template>
 
 <div>
+
+  <detail-modal :oneroom = "oneroom"
+                :clickedItem= "clickedItem"
+                :modal = "modal" 
+                /> 
+
+
   <div class="menu">
     <a v-for="item in menus" :key="item">{{ item }}</a>
   </div>
   
   <discount-banner />
 
-  <div v-if="modal" class="black-bg">
-    <div class="white-bg">
-      <h4>{{ oneroom[ clickedItem ].title }}</h4>
-      <p>{{ oneroom[ clickedItem ].content }}</p>
-      <button @click="modal = false">닫기</button>
-    </div>
-  </div>
+  
+    <discount-banner/>
 
-  <div v-for="(a, i) in oneroom" :key="i">
+
+  <!-- <div v-for="(a, i) in oneroom" :key="i">
     <img :src="a.image" class="room-img">
     <h4 @click="modal = true; clickedItem = i">{{ a.title }}</h4>
     <p>{{ a.price }}원</p>
-  </div>
+  </div> -->
+
+  <product-card v-for="( a, i ) in oneroom" :key="i"
+                :oneroom = "oneroom[i]" /> 
 
 
 </div>
@@ -29,17 +35,29 @@
 <script>
 
 import oneroomList from "./assets/oneroom.js";
+<<<<<<< HEAD
 import DiscountBanner from './components/DiscountBanner.vue';
+=======
+import DetailModal from './components/DetailModal.vue';
+import DiscountBanner from './components/DiscountBanner.vue';
+import ProductCard from './components/ProductCard.vue';
+>>>>>>> 62dd362 ([10-11] : Props)
 
 export default {
   name: 'App',
 
   components: {
+<<<<<<< HEAD
     DiscountBanner
+=======
+    DiscountBanner,
+    DetailModal,
+    ProductCard
+>>>>>>> 62dd362 ([10-11] : Props)
   },
 
    // 현재 상태
-  data() {
+    data() {
     return {
       clickedItem: 0, // 번호 저장
       oneroom: oneroomList,
