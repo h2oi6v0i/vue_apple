@@ -11,8 +11,6 @@
   <div class="menu">
     <a v-for="item in menus" :key="item">{{ item }}</a>
   </div>
-  
-  <discount-banner />
 
   
     <discount-banner/>
@@ -35,25 +33,17 @@
 <script>
 
 import oneroomList from "./assets/oneroom.js";
-<<<<<<< HEAD
-import DiscountBanner from './components/DiscountBanner.vue';
-=======
 import DetailModal from './components/DetailModal.vue';
 import DiscountBanner from './components/DiscountBanner.vue';
 import ProductCard from './components/ProductCard.vue';
->>>>>>> 62dd362 ([10-11] : Props)
 
 export default {
   name: 'App',
 
   components: {
-<<<<<<< HEAD
-    DiscountBanner
-=======
     DiscountBanner,
     DetailModal,
     ProductCard
->>>>>>> 62dd362 ([10-11] : Props)
   },
 
    // 현재 상태
