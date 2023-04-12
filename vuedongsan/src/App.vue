@@ -4,6 +4,8 @@
   <div class="menu">
     <a v-for="item in menus" :key="item">{{ item }}</a>
   </div>
+  
+  <discount-banner />
 
   <div v-if="modal" class="black-bg">
     <div class="white-bg">
@@ -27,9 +29,14 @@
 <script>
 
 import oneroomList from "./assets/oneroom.js";
+import DiscountBanner from './components/DiscountBanner.vue';
 
 export default {
   name: 'App',
+
+  components: {
+    DiscountBanner
+  },
 
    // 현재 상태
   data() {
@@ -53,6 +60,12 @@ export default {
 
 body {
   margin: 0
+}
+
+.discount {
+  background-color: #EEE;
+  padding: 10px;
+  margin: 10px;
 }
 
 .black-bg {
