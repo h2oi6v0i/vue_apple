@@ -2,10 +2,14 @@
 
 <div>
 
-  <detail-modal :oneroom = "oneroom"
+  <transition name="fade">
+      <detail-modal :oneroom = "oneroom"
                 :clickedItem= "clickedItem"
                 :modal = "modal" 
+                @closeModal = "modal = false; clickedItem = $event"
                 /> 
+  </transition>
+
 
 
   <div class="menu">
@@ -13,17 +17,13 @@
   </div>
 
   
-    <discount-banner/>
-
-
-  <!-- <div v-for="(a, i) in oneroom" :key="i">
-    <img :src="a.image" class="room-img">
-    <h4 @click="modal = true; clickedItem = i">{{ a.title }}</h4>
-    <p>{{ a.price }}원</p>
-  </div> -->
+  <discount-banner/>
 
   <product-card v-for="( a, i ) in oneroom" :key="i"
-                :oneroom = "oneroom[i]" /> 
+                :oneroom = "oneroom[i]" 
+                @openModal = "modal = true; clickedItem = $event"
+                @closeModal = "modal = false; clickedItem = $event"
+                /> 
 
 
 </div>
@@ -62,6 +62,16 @@ export default {
 </script>
 
 <style>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 300ms ease-in-out;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
 * {
   box-sizing: border-box;
 }
