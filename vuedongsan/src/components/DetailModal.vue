@@ -5,10 +5,13 @@
       <h4>{{ oneroom[ clickedItem ].title }}</h4>
       <p>{{ oneroom[ clickedItem ].content }}</p>
       <input v-model="month"> 
-      <p>{{ month }}개월 선택함 : {{ oneroom[ clickedItem ].price + month }}</p>
+      <p>{{ month }}개월 선택함 : {{ oneroom[ clickedItem ].price * month }}</p>
       <button @click="closeModal">닫기</button>
     </div>
   </div>
+
+  <!-- TODO: 모달창 내에 input이 있는데 여기에 2를 기입했을 때 알림창 alert() 띄우기 -->
+
 </template>
 
 <script>
@@ -45,7 +48,13 @@ export default {
       closeModal() {
         this.$emit( 'closeModal', this.oneroom.id );
       }
-    }
+    },
+    
+    beforeUpdate() {
+      if( this.month == 2 ) {
+        alert( "2 입력은 안 됨" );
+      }
+    },
 }
 </script>
 

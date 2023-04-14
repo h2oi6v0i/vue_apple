@@ -4,10 +4,10 @@
 
   <transition name="fade">
       <detail-modal :oneroom = "oneroom"
-                :clickedItem= "clickedItem"
-                :modal = "modal" 
-                @closeModal = "modal = false; clickedItem = $event"
-                /> 
+                    :clickedItem= "clickedItem"
+                    :modal = "modal" 
+                    @closeModal = "modal = false; clickedItem = $event"
+      /> 
   </transition>
 
 
@@ -17,13 +17,19 @@
   </div>
 
   
-  <discount-banner/>
+  <!-- Remove after 2 seconds -->
+  <discount-banner v-if="showBanner" />
+
+
+  <button @click="priceSort">가격순 정렬</button>
+  <button @click="sortBack">정렬 해제</button>
+
 
   <product-card v-for="( a, i ) in oneroom" :key="i"
                 :oneroom = "oneroom[i]" 
                 @openModal = "modal = true; clickedItem = $event"
                 @closeModal = "modal = false; clickedItem = $event"
-                /> 
+  /> 
 
 
 </div>
@@ -47,14 +53,28 @@ export default {
   },
 
    // 현재 상태
-    data() {
+  data() {
     return {
-      clickedItem: 0, // 번호 저장
-      oneroom: oneroomList,
+      showBanner: true,
+      oneroomOriginal: [...oneroomList], // 원래 데이터가 필요하면 이거 씀 (원본 데이터) array/object 데이터의 사본을 만들 때 사용하는 방법 
+      clickedItem: 0, // 번호 저 장
+      oneroom: oneroomList, // 원본 데이터 건드릴 때는 이거 쓰고 (조작할 데이터)
       modal: false,
       products: [ '역삼동 원룸', '마곡동 원룸', '방배동 원룸' ],
       menus : [ 'Home', 'Products', 'About' ],
       신고수: [ 0, 0, 0, ]
+    }
+  },
+
+  methods: {
+    priceSort() {
+      this.oneroom.sort(function(a,b) { // sort() 함수는 원본을 변형시킴 vs map(), filter() 등은 원본을 보존해줌
+        return a.price - b.price
+      })
+    },
+
+    sortBack() {
+      this.oneroom = [ ...this.oneroomOriginal ];
     }
   },
 }
