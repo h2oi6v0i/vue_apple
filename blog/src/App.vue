@@ -37,24 +37,19 @@
       </div>
     </nav>
 
-    <div class="container mt-4">
-      <h5>Vue 열심히 공부하자</h5>
-      <p>멋지다 전개리~!</p>
+    <router-link to="/main">메인으로 이동합니다</router-link>
+    <router-link to="/list">리스트로 이동합니다</router-link>
+    <div class="mt-4">
+      <router-view :list-data="listData"></router-view>
     </div>
 
-    <blog-list :list-data="listData" />
   </div>
 </template>
 
 <script>
-import BlogList from './components/BlogList.vue'
-import listData from './assets/blog';
+import listData from './assets/blog.js'
 
 export default {
-  components: { 
-    BlogList 
-  },
-
   name: 'App',
 
   data() {
