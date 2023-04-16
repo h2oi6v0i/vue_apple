@@ -1,58 +1,76 @@
 <template>
   <div>
     <div class="header">
-    <ul class="header-button-left">
-      <li>Cancel</li>
-    </ul>
-    <ul class="header-button-right">
-      <li>Next</li>
-    </ul>
-    <img src="./assets/logo.png" class="logo" />
-  </div>
+      <ul class="header-button-left">
+        <li>Cancel</li>
+      </ul>
+      <ul class="header-button-right">
+        <li>Next</li>
+      </ul>
+      <img src="./assets/logo.png" class="logo" />
+    </div>
 
-  <post-container :post-content="postContent"/>
+    <post-container :post-content="postContent" 
+                    :step="step"
+    />
 
-  <!-- 클릭 시, 1.서버에서 추가 게시물을 가져오고 2.<PostItem>으로 보여주기 -->
-  <button @click="more">더보기</button>
+    <button @click="more">더보기</button>
 
-  <div class="footer">
-    <ul class="footer-button-plus">
-      <input type="file" id="file" class="inputfile" />
-      <label for="file" class="input-plus">+</label>
-    </ul>
- </div>
+    <div class="footer">
+      <ul class="footer-button-plus">
+        <input @change="upload" type="file" id="file" class="inputfile" />
+        <label for="file" class="input-plus">+</label>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-import PostContainer from './components/PostContainer.vue'
-import postContent from './assets/post.js'
-import axios from 'axios'
+import PostContainer from "./components/PostContainer.vue";
+import postContent from "./assets/post.js";
+import axios from "axios";
 
 export default {
-  name: 'App',
+  name: "App",
 
-  components: { 
-    PostContainer 
+  components: {
+    PostContainer,
   },
 
   data() {
     return {
       postContent: postContent,
       clickedCount: 0,
-    }
-  }, 
+      tabItemNum: 0,
+      step: 0, // 중요하고 다양한 컴포넌트가 사용하는 데이터는 전부 최상위 부모에 저장하기!
+    };
+  },
 
   methods: {
+    /**
+     * 클릭 시, 1.서버에서 추가 게시물을 가져오고 2.<PostItem>으로 보여주기
+     */
     more() {
-      axios.get( `https://codingapple1.github.io/vue/more${ this.clickedCount }.json` )
-      .then( ( result ) => { // () 생략하고 result만 써도 됨
-        this.postContent.push( result.data ); // 여기까지 하면 새로고침하면 사라짐
-        this.clickedCount++;
-      })
+      axios
+        .get(`https://codingapple1.github.io/vue/more${this.clickedCount}.json`)
+        .then((result) => { // () 생략하고 result만 써도 됨
+          this.postContent.push(result.data);
+          this.clickedCount++;
+        });
+    },
+
+    /** 
+     * TODO: PostContainer.vue의 upload-image에 background 속성으로 넣기
+     */
+    upload(e) {
+      let file = e.target.files // 내가 업로드한 파일이 다 담겨있음
+      console.log( file[0] );
+      let url = URL.createObjectURL( file[0] ); // file[0]의 URL 생성함
+      console.log(url );
+      this.step++;
     }
   },
-}
+};
 </script>
 
 <style>
