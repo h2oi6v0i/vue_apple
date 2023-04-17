@@ -5,13 +5,17 @@
         <li>Cancel</li>
       </ul>
       <ul class="header-button-right">
-        <li>Next</li>
+        <li v-if="step === 1" @click="step++">Next</li>
+        <li v-if="step === 2" @click="publish">발행</li>
       </ul>
       <img src="./assets/logo.png" class="logo" />
     </div>
 
-    <post-container :post-content="postContent" 
-                    :step="step"
+    <post-container
+      :post-content="postContent"
+      :step="step"
+      :image-url="imageUrl"
+      @write="written = $event"
     />
 
     <button @click="more">더보기</button>
@@ -43,6 +47,8 @@ export default {
       clickedCount: 0,
       tabItemNum: 0,
       step: 0, // 중요하고 다양한 컴포넌트가 사용하는 데이터는 전부 최상위 부모에 저장하기!
+      imageUrl: "", // 1️⃣ data()에 저장
+      written: "",
     };
   },
 
@@ -53,22 +59,39 @@ export default {
     more() {
       axios
         .get(`https://codingapple1.github.io/vue/more${this.clickedCount}.json`)
-        .then((result) => { // () 생략하고 result만 써도 됨
+        .then((result) => {
+          // () 생략하고 result만 써도 됨
           this.postContent.push(result.data);
           this.clickedCount++;
         });
     },
 
-    /** 
+    /**
      * TODO: PostContainer.vue의 upload-image에 background 속성으로 넣기
+     * - 여기에 있는 변수를 자식 컴포넌트로 보내는 방법
      */
     upload(e) {
-      let file = e.target.files // 내가 업로드한 파일이 다 담겨있음
-      console.log( file[0] );
-      let url = URL.createObjectURL( file[0] ); // file[0]의 URL 생성함
-      console.log(url );
+      let file = e.target.files; // 내가 업로드한 파일이 다 담겨있음
+      let url = URL.createObjectURL(file[0]); // file[0]의 URL 생성함
+      console.log(url);
+      this.imageUrl = url; // 2️⃣ data()에서 만든 변수에 url 담기
       this.step++;
-    }
+    },
+
+    publish() {
+      let myPost = {
+        name: "John Doe",
+        userImage: "https://placeimg.com/200/200/people",
+        postImage: this.imageUrl,
+        likes: 20,
+        date: "Apr 20",
+        liked: false,
+        content: this.written,
+        filter: "clarendon",
+      };
+      this.postContent.unshift( myPost ); // Array 맨 앞에 추가하기
+      this.step = 0; // 메인 페이지로 돌아가기
+    },
   },
 };
 </script>
