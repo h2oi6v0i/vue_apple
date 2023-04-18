@@ -8,16 +8,19 @@
         :post-content="postContent[index]"
       />
     </div>
- 
+
     <!-- 필터 선택 페이지 -->
     <div v-if="step === 1">
-      <div class="upload-image" :style="`background-image : url(${imageUrl})`"></div>
+      <div
+        class="upload-image"
+        :style="`background-image : url(${imageUrl})`"
+      >
+      </div>
       <div class="filters">
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
-        <div class="filter-1"></div>
+        <filter-box v-for="(item, index) in filters" :key="index" 
+                    :image-url="imageUrl" 
+                    :class="filters[index]"
+                    />
       </div>
     </div>
 
@@ -25,27 +28,66 @@
     <div v-if="step === 2">
       <div class="upload-image"></div>
       <div class="write">
-        <textarea @input="$emit( 'write', $event.target.value )" class="write-box">write!</textarea>
+        <textarea
+          @input="$emit('write', $event.target.value)"
+          class="write-box"
+        >write!
+        </textarea>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import FilterBox from "./FilterBox.vue";
 import PostItem from "./PostItem.vue";
 
 export default {
+  name: "PostContainer",
+
   components: {
     PostItem,
+    FilterBox,
   },
 
-  name: "PostContainer",
+  data() {
+    return {
+      filters: [
+        "aden",
+        "_1977",
+        "brannan",
+        "brooklyn",
+        "clarendon",
+        "earlybird",
+        "gingham",
+        "hudson",
+        "inkwell",
+        "kelvin",
+        "lark",
+        "lofi",
+        "maven",
+        "mayfair",
+        "moon",
+        "nashville",
+        "perpetua",
+        "reyes",
+        "rise",
+        "slumber",
+        "stinson",
+        "toaster",
+        "valencia",
+        "walden",
+        "willow",
+        "xpro2",
+      ],
+    };
+  },
 
   /**
    * TODO: 기능 구현
    * step: 0 -> <post-item />
    * step: 1 -> 필터 선택 페이지
-   * step: 2 -> 글 작성 페이지  
+   * step: 2 -> 글 작성 페이지
    */
 
   props: {

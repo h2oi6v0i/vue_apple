@@ -73,7 +73,6 @@ export default {
     upload(e) {
       let file = e.target.files; // 내가 업로드한 파일이 다 담겨있음
       let url = URL.createObjectURL(file[0]); // file[0]의 URL 생성함
-      console.log(url);
       this.imageUrl = url; // 2️⃣ data()에서 만든 변수에 url 담기
       this.step++;
     },
