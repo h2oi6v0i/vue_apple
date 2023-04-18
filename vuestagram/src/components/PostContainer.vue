@@ -5,8 +5,7 @@
       <post-item
         v-for="(item, index) in postContent"
         :key="index"
-        :post-content="postContent[index]"
-      />
+        :post-content="postContent[index]">{{ item.name }}</post-item>
     </div>
 
     <!-- 필터 선택 페이지 -->
@@ -17,10 +16,11 @@
       >
       </div>
       <div class="filters">
-        <filter-box v-for="(item, index) in filters" :key="index" 
+        <filter-box v-for="(filter, index) in filters" :key="index" 
                     :image-url="imageUrl" 
-                    :class="filters[index]"
-                    />
+                    :filter="filter">
+                    {{ filter }}
+        </filter-box>
       </div>
     </div>
 
