@@ -11,6 +11,9 @@
       <img src="./assets/logo.png" class="logo" />
     </div>
 
+    <h4>안녕하시렵니까 {{ $store.state.name }}</h4>
+    <button @click="$store.state.name = 'Yujung'">BUTTON</button>
+
     <post-container
       :post-content="postContent"
       :step="step"
@@ -49,7 +52,14 @@ export default {
       step: 0, // 중요하고 다양한 컴포넌트가 사용하는 데이터는 전부 최상위 부모에 저장하기!
       imageUrl: "", // 1️⃣ data()에 저장
       written: "",
+      selectedFilter: "",
     };
+  },
+  
+  mounted() {
+    this.emitter.on( 'clickedFilter', ( a ) => {
+      this.selectedFilter = a;
+    })
   },
 
   methods: {
@@ -66,7 +76,7 @@ export default {
         });
     },
 
-    /**
+    /** 
      * TODO: PostContainer.vue의 upload-image에 background 속성으로 넣기
      * - 여기에 있는 변수를 자식 컴포넌트로 보내는 방법
      */
@@ -86,7 +96,7 @@ export default {
         date: "Apr 20",
         liked: false,
         content: this.written,
-        filter: "clarendon",
+        filter: this.selectedFilter,
       };
       this.postContent.unshift( myPost ); // Array 맨 앞에 추가하기
       this.step = 0; // 메인 페이지로 돌아가기

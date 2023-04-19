@@ -1,5 +1,5 @@
 <template>
-   <div :class="filter + ' filter-item'" :style="`background-image : url(${imageUrl})`">
+   <div :class="filter + ' filter-item'" :style="`background-image : url(${imageUrl})`" @click="applyFilter">
       <slot></slot>
    </div>
 </template>
@@ -7,6 +7,12 @@
 <script>
 export default {
   name: "FilterBox",
+
+  methods: {
+    applyFilter() {
+      this.emitter.emit( 'clickedFilter', this.filter )
+    }
+  },
 
   props: {
     imageUrl : String,

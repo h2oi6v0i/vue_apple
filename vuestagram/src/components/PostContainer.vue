@@ -5,13 +5,15 @@
       <post-item
         v-for="(item, index) in postContent"
         :key="index"
-        :post-content="postContent[index]">{{ item.name }}</post-item>
+        :post-content="postContent[index]"
+      />
     </div>
 
     <!-- 필터 선택 페이지 -->
     <div v-if="step === 1">
       <div
         class="upload-image"
+        :class="this.selectedFilter"
         :style="`background-image : url(${imageUrl})`"
       >
       </div>
@@ -26,7 +28,7 @@
 
     <!-- 글 작성 페이지 -->
     <div v-if="step === 2">
-      <div class="upload-image"></div>
+      <div class="upload-image" :class="this.selectedFilter" :style="`background-image : url(${imageUrl})`"></div>
       <div class="write">
         <textarea
           @input="$emit('write', $event.target.value)"
@@ -80,7 +82,15 @@ export default {
         "willow",
         "xpro2",
       ],
+      selectedFilter: "", // 선택한 필터 저장하기! 왜? 그래야 데이터 바인딩 할 수 있음
     };
+  },
+
+
+  mounted() {
+    this.emitter.on( 'clickedFilter', ( a ) => {
+      this.selectedFilter = a;
+    })
   },
 
   /**
