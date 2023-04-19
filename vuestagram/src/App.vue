@@ -11,13 +11,17 @@
       <img src="./assets/logo.png" class="logo" />
     </div>
 
+    <!-- Vuex -->
     <h4>안녕하시렵니까 {{ $store.state.name }}</h4>
     <button @click="$store.commit('changeName')">BUTTON</button>
+
     <h5>저의 나이는 {{ $store.state.age }}입니다. (어쩔티비)</h5>
-    <button @click="$store.commit('addAge', 10)">내 나이.. 한 살 추가</button>
+    <button @click="addAge(10)">내 나이.. 한 살 추가</button>
 
     <p>{{ $store.state.more }}</p>
     <button @click="$store.dispatch('getData')">더 보여주세요!</button>
+
+    <p>{{ myName }}</p>
 
     <post-container
       :post-content="postContent"
@@ -40,7 +44,8 @@
 <script>
 import PostContainer from "./components/PostContainer.vue";
 import postContent from "./assets/post.js";
-import axios from "axios";
+import axios from 'axios';
+import { mapMutations, mapState } from 'vuex';
 
 export default {
   name: "App",
@@ -58,6 +63,7 @@ export default {
       imageUrl: "", // 1️⃣ data()에 저장
       written: "",
       selectedFilter: "",
+
     };
   },
   
@@ -67,7 +73,13 @@ export default {
     })
   },
 
+  computed: {
+    ...mapState( { myName : 'name' } )
+  },
+
   methods: {
+    ...mapMutations( [ 'morePost', 'addLikes', 'addAge' ] ),
+   
     /**
      * 클릭 시, 1.서버에서 추가 게시물을 가져오고 2.<PostItem>으로 보여주기
      */
