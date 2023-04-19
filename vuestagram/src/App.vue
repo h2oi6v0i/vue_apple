@@ -16,6 +16,9 @@
     <h5>저의 나이는 {{ $store.state.age }}입니다. (어쩔티비)</h5>
     <button @click="$store.commit('addAge', 10)">내 나이.. 한 살 추가</button>
 
+    <p>{{ $store.state.more }}</p>
+    <button @click="$store.dispatch('getData')">더 보여주세요!</button>
+
     <post-container
       :post-content="postContent"
       :step="step"
