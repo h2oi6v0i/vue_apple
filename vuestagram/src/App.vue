@@ -11,26 +11,12 @@
       <img src="./assets/logo.png" class="logo" />
     </div>
 
-    <!-- Vuex -->
-    <h4>안녕하시렵니까 {{ $store.state.name }}</h4>
-    <button @click="$store.commit('changeName')">BUTTON</button>
-
-    <h5>저의 나이는 {{ $store.state.age }}입니다. (어쩔티비)</h5>
-    <button @click="addAge(10)">내 나이.. 한 살 추가</button>
-
-    <p>{{ $store.state.more }}</p>
-    <button @click="$store.dispatch('getData')">더 보여주세요!</button>
-
-    <p>{{ myName }}</p>
-
     <post-container
       :post-content="postContent"
       :step="step"
       :image-url="imageUrl"
       @write="written = $event"
     />
-
-    <button @click="more">더보기</button>
 
     <div class="footer">
       <ul class="footer-button-plus">
@@ -59,7 +45,7 @@ export default {
       postContent: postContent,
       clickedCount: 0,
       tabItemNum: 0,
-      step: 0, // 중요하고 다양한 컴포넌트가 사용하는 데이터는 전부 최상위 부모에 저장하기!
+      step: 3, // 중요하고 다양한 컴포넌트가 사용하는 데이터는 전부 최상위 부모에 저장하기!
       imageUrl: "", // 1️⃣ data()에 저장
       written: "",
       selectedFilter: "",

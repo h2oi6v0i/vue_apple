@@ -37,11 +37,16 @@
         </textarea>
       </div>
     </div>
+
+    <div v-if="step === 3">
+      <my-page :one="1" />
+    </div>
   </div>
 </template>
 
 <script>
 import FilterBox from "./FilterBox.vue";
+import MyPage from './MyPage.vue';
 import PostItem from "./PostItem.vue";
 
 export default {
@@ -50,6 +55,7 @@ export default {
   components: {
     PostItem,
     FilterBox,
+    MyPage,
   },
 
   data() {
